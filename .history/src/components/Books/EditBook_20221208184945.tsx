@@ -1,0 +1,19 @@
+import React from "react";
+
+type Props = {};
+
+function EditBook({}: Props) {
+  return (
+    <div>
+      <form>
+        <label htmlFor=''>Edit Title</label>
+        <input type='text' placeholder='Book Title' />
+        <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'>
+          Save
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default EditBook;

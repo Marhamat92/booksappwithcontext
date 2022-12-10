@@ -3,7 +3,7 @@ import EditBook from "./EditBook";
 
 type Props = {
   book: any;
-  EditClick: (id: number, newTitle: string) => void;
+  EditClick: (id: number, newTitle: string, imageLink: string) => void;
   DeleteClick: (id: number) => void;
 };
 

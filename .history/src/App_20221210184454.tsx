@@ -60,7 +60,7 @@ function App() {
   ) => {
     const response = await axios.put(`http://127.0.0.1:3001/books/${id}`, {
       title: newTitle,
-      imageLink: imageLink ? imageLink : defaultImage,
+      imageLink: imageLink ? imageLink : imageLink,
     });
 
     const newBooks = books.map((book: any) => {

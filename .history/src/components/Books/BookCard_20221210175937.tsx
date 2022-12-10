@@ -19,7 +19,7 @@ function BookCard({ book, EditClick, DeleteClick }: Props) {
   };
 
   const handleSubmit = (id: number, newTitle: string) => {
-    EditClick(id, newTitle);
+    EditClick(id, newTitle, book.imageLink);
     setShowEdit(false);
   };
 

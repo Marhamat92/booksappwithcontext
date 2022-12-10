@@ -10,7 +10,6 @@ function App() {
   const [title, setTitle] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [books, setBooks] = useState<any>([]);
-  const [imageLink, setImageLink] = useState<string>("");
 
   const getAllBooks = async () => {
     const response = await axios.get("http://127.0.0.1:3001/books");
@@ -26,10 +25,6 @@ function App() {
     setImage(URL.createObjectURL(e.target.files![0]));
   };
 
-  const handleImageLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setImageLink(e.target.value);
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTitle("");
@@ -39,7 +34,7 @@ function App() {
   const handleCreateBook = async () => {
     const response = await axios.post("http://127.0.0.1:3001/books", {
       title,
-      imageLink,
+      image,
     });
     setBooks([...books, response.data]);
   };
@@ -51,16 +46,9 @@ function App() {
     setBooks(newBooks);
   };
 
-  const defaultImage = "https://media.nomadicmatt.com/2022/norwayguide.jpeg";
-
-  const handleEditBook = async (
-    id: number,
-    newTitle: string,
-    newImage: string
-  ) => {
+  const handleEditBook = async (id: number, newTitle: string) => {
     const response = await axios.put(`http://127.0.0.1:3001/books/${id}`, {
       title: newTitle,
-      imageLink: imageLink ? imageLink : defaultImage,
     });
 
     const newBooks = books.map((book: any) => {
@@ -86,13 +74,7 @@ function App() {
             value={title}
             onChange={handleTitleChange}
           />
-          {/* <ImageInput onChange={handleImageChange} label='Add Book Image' /> */}
-          <TextInput
-            label='Add Book Image Link'
-            placeholder='Book Image Link'
-            value={imageLink}
-            onChange={handleImageLinkChange}
-          />
+          <ImageInput onChange={handleImageChange} label='Add Book Image' />
           <div className='flex justify-center'>
             <MainButton
               onClick={handleCreateBook}

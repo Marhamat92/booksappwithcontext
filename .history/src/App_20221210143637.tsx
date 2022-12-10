@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import BookList from "./components/Books/BookList";
 import MainButton from "./components/Buttons/MainButton";
@@ -10,10 +10,9 @@ function App() {
   const [title, setTitle] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [books, setBooks] = useState<any>([]);
-  const [imageLink, setImageLink] = useState<string>("");
 
   const getAllBooks = async () => {
-    const response = await axios.get("http://127.0.0.1:3001/books");
+    const response = await axios.get("http://http://127.0.0.1:3001/books");
     console.log(response.data);
     setBooks(response.data);
   };
@@ -26,55 +25,39 @@ function App() {
     setImage(URL.createObjectURL(e.target.files![0]));
   };
 
-  const handleImageLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setImageLink(e.target.value);
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTitle("");
     setImage("");
   };
 
-  const handleCreateBook = async () => {
-    const response = await axios.post("http://127.0.0.1:3001/books", {
-      title,
-      imageLink,
-    });
-    setBooks([...books, response.data]);
+  const handleCreateBook = () => {
+    const newBook = [
+      ...books,
+      {
+        id: Math.round(Math.random() * 9999),
+        title,
+        image,
+      },
+    ];
+    setBooks(newBook);
+    console.log(books);
   };
 
-  const handleDeleteBook = async (id: number) => {
-    await axios.delete(`http://127.0.0.1:3001/books/${id}`);
-
+  const handleDeleteBook = (id: number) => {
     const newBooks = books.filter((book: any) => book.id !== id);
     setBooks(newBooks);
   };
 
-  const defaultImage = "https://media.nomadicmatt.com/2022/norwayguide.jpeg";
-
-  const handleEditBook = async (
-    id: number,
-    newTitle: string,
-    newImage: string
-  ) => {
-    const response = await axios.put(`http://127.0.0.1:3001/books/${id}`, {
-      title: newTitle,
-      imageLink: imageLink ? imageLink : defaultImage,
-    });
-
+  const handleEditBook = (id: number, newTitle: string) => {
     const newBooks = books.map((book: any) => {
       if (book.id === id) {
-        return { ...book, ...response.data };
+        return { ...book, title: newTitle };
       }
       return book;
     });
     setBooks(newBooks);
   };
-
-  useEffect(() => {
-    getAllBooks();
-  }, []);
 
   return (
     <div>
@@ -86,13 +69,7 @@ function App() {
             value={title}
             onChange={handleTitleChange}
           />
-          {/* <ImageInput onChange={handleImageChange} label='Add Book Image' /> */}
-          <TextInput
-            label='Add Book Image Link'
-            placeholder='Book Image Link'
-            value={imageLink}
-            onChange={handleImageLinkChange}
-          />
+          <ImageInput onChange={handleImageChange} label='Add Book Image' />
           <div className='flex justify-center'>
             <MainButton
               onClick={handleCreateBook}

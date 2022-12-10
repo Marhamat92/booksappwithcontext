@@ -3,7 +3,7 @@ import EditBook from "./EditBook";
 
 type Props = {
   book: any;
-  EditClick: (id: number, newTitle: string) => void;
+  EditClick: (id: number, newTitle: string, imageLink: string) => void;
   DeleteClick: (id: number) => void;
 };
 
@@ -19,7 +19,7 @@ function BookCard({ book, EditClick, DeleteClick }: Props) {
   };
 
   const handleSubmit = (id: number, newTitle: string) => {
-    EditClick(id, newTitle);
+    EditClick(id, newTitle, book);
     setShowEdit(false);
   };
 

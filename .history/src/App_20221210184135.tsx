@@ -60,7 +60,9 @@ function App() {
   ) => {
     const response = await axios.put(`http://127.0.0.1:3001/books/${id}`, {
       title: newTitle,
-      imageLink: imageLink ? imageLink : defaultImage,
+      imageLink: imageLink
+        ? imageLink
+        : "https://totalenergies.com/sites/g/files/nytnzq121/files/styles/w_1110/public/images/2021-09/7614_0.jpg?itok=WqEHfKiy",
     });
 
     const newBooks = books.map((book: any) => {

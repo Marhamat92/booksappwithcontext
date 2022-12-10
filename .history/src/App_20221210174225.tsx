@@ -34,6 +34,7 @@ function App() {
     e.preventDefault();
     setTitle("");
     setImage("");
+    setImageLink("");
   };
 
   const handleCreateBook = async () => {
@@ -51,21 +52,14 @@ function App() {
     setBooks(newBooks);
   };
 
-  const defaultImage = "https://media.nomadicmatt.com/2022/norwayguide.jpeg";
-
-  const handleEditBook = async (
-    id: number,
-    newTitle: string,
-    newImage: string
-  ) => {
+  const handleEditBook = async (id: number, newTitle: string) => {
     const response = await axios.put(`http://127.0.0.1:3001/books/${id}`, {
       title: newTitle,
-      imageLink: imageLink ? imageLink : defaultImage,
     });
 
     const newBooks = books.map((book: any) => {
       if (book.id === id) {
-        return { ...book, ...response.data };
+        return { ...book, ...response.data, imageLink };
       }
       return book;
     });
@@ -86,9 +80,9 @@ function App() {
             value={title}
             onChange={handleTitleChange}
           />
-          {/* <ImageInput onChange={handleImageChange} label='Add Book Image' /> */}
+          <ImageInput onChange={handleImageChange} label='Add Book Image' />
           <TextInput
-            label='Add Book Image Link'
+            label="You can add image link here if you don't have it locally"
             placeholder='Book Image Link'
             value={imageLink}
             onChange={handleImageLinkChange}

@@ -34,6 +34,7 @@ function App() {
     e.preventDefault();
     setTitle("");
     setImage("");
+    setImageLink("");
   };
 
   const handleCreateBook = async () => {
@@ -51,8 +52,6 @@ function App() {
     setBooks(newBooks);
   };
 
-  const defaultImage = "https://media.nomadicmatt.com/2022/norwayguide.jpeg";
-
   const handleEditBook = async (
     id: number,
     newTitle: string,
@@ -60,7 +59,7 @@ function App() {
   ) => {
     const response = await axios.put(`http://127.0.0.1:3001/books/${id}`, {
       title: newTitle,
-      imageLink: imageLink ? imageLink : defaultImage,
+      imageLink: newImage,
     });
 
     const newBooks = books.map((book: any) => {

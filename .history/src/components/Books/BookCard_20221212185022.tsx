@@ -1,18 +1,17 @@
 import React from "react";
 import EditBook from "./EditBook";
-import { useBooksContext } from "../../hooks/use-books-context";
 
 type Props = {
   book: any;
+  EditClick: (id: number, newTitle: string) => void;
+  DeleteClick: (id: number) => void;
 };
 
-function BookCard({ book }: Props) {
-  const { handleEditBook, handleDeleteBook } = useBooksContext();
-
+function BookCard({ book, EditClick, DeleteClick }: Props) {
   const [showEdit, setShowEdit] = React.useState(false);
 
   const handleDeleteClick = () => {
-    handleDeleteBook(book.id);
+    DeleteClick(book.id);
   };
 
   const handleEditClick = () => {
@@ -20,7 +19,7 @@ function BookCard({ book }: Props) {
   };
 
   const handleSubmit = (id: number, newTitle: string) => {
-    handleEditBook(id, newTitle);
+    EditClick(id, newTitle);
     setShowEdit(false);
   };
 

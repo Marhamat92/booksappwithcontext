@@ -21,6 +21,7 @@ function App() {
 
   useEffect(() => {
     getAllBooks();
+    console.log("Hello from App.tsx");
   }, []);
 
   return (

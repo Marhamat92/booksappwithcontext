@@ -12,6 +12,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <BooksContextProvider>
-    <App />
+    <>
+      {" "}
+      <App />
+    </>
   </BooksContextProvider>
 );

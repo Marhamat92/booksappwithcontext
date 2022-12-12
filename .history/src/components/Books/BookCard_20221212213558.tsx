@@ -1,13 +1,14 @@
 import React from "react";
 import EditBook from "./EditBook";
-import { useBooksContext } from "../../hooks/use-books-context";
+import { useContext } from "react";
+import { BooksContext } from "../../context/books";
 
 type Props = {
   book: any;
 };
 
 function BookCard({ book }: Props) {
-  const { handleEditBook, handleDeleteBook } = useBooksContext();
+  const { handleEditBook, handleDeleteBook } = useContext(BooksContext);
 
   const [showEdit, setShowEdit] = React.useState(false);
 

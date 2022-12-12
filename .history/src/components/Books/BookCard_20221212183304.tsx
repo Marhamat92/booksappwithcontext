@@ -1,18 +1,17 @@
 import React from "react";
 import EditBook from "./EditBook";
-import { useBooksContext } from "../../hooks/use-books-context";
 
 type Props = {
   book: any;
+  EditClick: (id: number, newTitle: string) => void;
+  DeleteClick: (id: number) => void;
 };
 
-function BookCard({ book }: Props) {
-  const { handleEditBook, handleDeleteBook } = useBooksContext();
-
+function BookCard({ book, EditClick, DeleteClick }: Props) {
   const [showEdit, setShowEdit] = React.useState(false);
 
-  const handleDeleteClick = () => {
-    handleDeleteBook(book.id);
+  const handleDeleteClick = (id: number) => {
+    DeleteClick(book.id);
   };
 
   const handleEditClick = () => {
@@ -20,7 +19,7 @@ function BookCard({ book }: Props) {
   };
 
   const handleSubmit = (id: number, newTitle: string) => {
-    handleEditBook(id, newTitle);
+    EditClick(id, newTitle);
     setShowEdit(false);
   };
 
@@ -29,11 +28,11 @@ function BookCard({ book }: Props) {
       <div className='border border-green-400  flex flex-col items-center h-72 w-52 rounded-md'>
         <div className=' w-full flex justify-end py-1 pr-1'>
           <i
-            onClick={handleEditClick}
+            onClick={() => handleEditClick}
             className='ri-pencil-fill text-teal-800 text-xl cursor-pointer'
           ></i>
           <i
-            onClick={handleDeleteClick}
+            onClick={() => handleDeleteClick}
             className='ri-close-circle-fill text-red-800 text-xl cursor-pointer'
           ></i>
         </div>

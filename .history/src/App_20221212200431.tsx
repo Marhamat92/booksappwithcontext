@@ -4,27 +4,35 @@ import BookList from "./components/Books/BookList";
 import MainButton from "./components/Buttons/MainButton";
 import ImageInput from "./components/Inputs/ImageInput";
 import TextInput from "./components/Inputs/TextInput";
-// import { useContext } from "react";
-// import { BooksContext } from "./context/books"; instead of using these lines of code, we can use the useBooksContext hook from the use-books-context.tsx file which we created in the hooks folder
-import { useBooksContext } from "./hooks/use-books-context";
+import { useContext } from "react";
+import { BooksContext } from "./context/books";
 
 function App() {
-  const {
-    title,
-    imageLink,
+  const [title, setTitle] = useState<string>("");
+  const [imageLink, setImageLink] = useState<string>("");
+  const [
+    books,
     getAllBooks,
     handleSubmit,
     handleCreateBook,
-    handleTitleChange,
-    handleImageLinkChange,
-  } = useBooksContext();
+    handleDeleteBook,
+    handleEditBook,
+  ] = useContext(BooksContext);
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleImageLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setImageLink(e.target.value);
+  };
 
   useEffect(() => {
     getAllBooks();
   }, []);
 
   return (
-    <>
+    <div>
       <div className='bg-green-400'>
         <form onSubmit={handleSubmit}>
           <TextInput
@@ -33,6 +41,7 @@ function App() {
             value={title}
             onChange={handleTitleChange}
           />
+          {/* <ImageInput onChange={handleImageChange} label='Add Book Image' /> */}
           <TextInput
             label='Add Book Image Link'
             placeholder='Book Image Link'
@@ -49,9 +58,13 @@ function App() {
         </form>
       </div>
       <div className='px-4'>
-        <BookList />
+        <BookList
+          EditClick={handleEditBook}
+          DeleteClick={handleDeleteBook}
+          books={books}
+        />
       </div>
-    </>
+    </div>
   );
 }
 

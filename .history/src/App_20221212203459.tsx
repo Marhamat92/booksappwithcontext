@@ -4,27 +4,32 @@ import BookList from "./components/Books/BookList";
 import MainButton from "./components/Buttons/MainButton";
 import ImageInput from "./components/Inputs/ImageInput";
 import TextInput from "./components/Inputs/TextInput";
-// import { useContext } from "react";
-// import { BooksContext } from "./context/books"; instead of using these lines of code, we can use the useBooksContext hook from the use-books-context.tsx file which we created in the hooks folder
-import { useBooksContext } from "./hooks/use-books-context";
+import { useContext } from "react";
+import { BooksContext } from "./context/books";
 
 function App() {
-  const {
-    title,
-    imageLink,
+  const [title, setTitle] = useState("");
+  const [imageLink, setImageLink] = useState("");
+
+  const [
     getAllBooks,
-    handleSubmit,
     handleCreateBook,
     handleTitleChange,
     handleImageLinkChange,
-  } = useBooksContext();
+  ] = useContext(BooksContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setTitle("");
+    setImageLink("");
+  };
 
   useEffect(() => {
     getAllBooks();
   }, []);
 
   return (
-    <>
+    <div>
       <div className='bg-green-400'>
         <form onSubmit={handleSubmit}>
           <TextInput
@@ -51,7 +56,7 @@ function App() {
       <div className='px-4'>
         <BookList />
       </div>
-    </>
+    </div>
   );
 }
 

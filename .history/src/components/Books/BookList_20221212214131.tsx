@@ -7,6 +7,8 @@ type Props = {};
 function BookList({}: Props) {
   const { books } = useBooksContext();
 
+  console.log(books, "Hello from BookList.tsx");
+
   const renderedBooks = books.map((book: any) => {
     return (
       <div key={book.id}>

@@ -1,16 +1,17 @@
 import React from "react";
 import BookCard from "./BookCard";
-import { useBooksContext } from "../../hooks/use-books-context";
+import { useContext } from "react";
+import { BooksContext } from "../../context/books";
 
 type Props = {};
 
 function BookList({}: Props) {
-  const { books } = useBooksContext();
+  const [books] = useContext(BooksContext);
 
-  const renderedBooks = books.map((book: any) => {
+  const renderedBooks = books.map((book) => {
     return (
       <div key={book.id}>
-        <BookCard book={book} />
+        <BookCard DeleteClick={DeleteClick} EditClick={EditClick} book={book} />
       </div>
     );
   });

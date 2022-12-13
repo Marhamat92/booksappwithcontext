@@ -18,11 +18,11 @@ function BooksContextProvider({ children }) {
     setImageLink(e.target.value);
   };
 
-  const getAllBooks = useCallback(async () => {
+  const getAllBooks = async () => {
     const response = await axios.get("http://127.0.0.1:3001/books");
     setBooks(response.data);
     console.log(response.data);
-  }, [])
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
